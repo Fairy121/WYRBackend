@@ -11,7 +11,7 @@ router.route("/createPost").post((req, res) => {
   if (post.left === "" || post.right === "") {
     return res.status(401).json({
       msg:
-        "Hey , you might have left something blank, check again before submitting"
+        "Hey , you might have left something blank, check again before submitting",
     });
   } else {
     newPost = new Post({
@@ -19,12 +19,12 @@ router.route("/createPost").post((req, res) => {
       post,
       color,
       votes,
-      title
+      title,
     });
     newPost
       .save()
       .then(() => res.json({ msg: "post created" }))
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         res.status(400).json({ msg: "Post cant be created " });
       });
@@ -32,7 +32,7 @@ router.route("/createPost").post((req, res) => {
 });
 
 router.route("/getPosts").get((req, res, next) => {
-  Post.find({}).then(function(p) {
+  Post.find({}).then(function (p) {
     res.send(p);
   });
 });
@@ -40,10 +40,10 @@ router.route("/updateVote").put((req, res) => {
   const id = req.body.id;
   const newVote = req.body.newVote;
   Post.findByIdAndUpdate(id, { votes: req.body.votes })
-    .then(function(p) {
+    .then(function (p) {
       res.send(p);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.status(400).json({ msg: "Invalid response, can't update vote" });
     });
 
